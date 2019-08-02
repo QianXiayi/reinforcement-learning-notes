@@ -73,13 +73,15 @@ $$ [\mathbf{\overline{x}_i}]_j = [I]_{ij} + \gamma [Q]_{ij} + \gamma^2 [Q]_{ij} 
 
 4. 下面列出动作值函数的目标函数：<br>
 对于controller，公式如下。$g$ 表示agent状态为 $s_t$ 时的内在目标。$\pi_{ag}$ 就是动作策略（上文写为 $\pi_a$ ）。
+
 $$ Q^*_1(s,a;g)
 = \max_{\pi_{ag}} E \left[ \sum_{t'=t}^{\infty} \gamma ^{t'-t} r_{t'} \mid s_t = s, a_t = a, g_t = g, \pi_{ag} \right] \\
 = \max_{\pi_{ag}} E \left[ r_t + \gamma max_{a_{t+1}} Q_1^*(s_{t+1}, a_{t+1}; g) \mid s_t = s, a_t = a, g_t = g, \pi_{ag} \right] $$
 对于meta-controller，公式如下。 $N$ 表示controller停止时经过的time steps。 $g'$ 是agent状态为 $s_{t+N}$ 时的内在目标，也就是内在目标序列中的下一个。 $\pi_g$ 是内在目标策略。
+
 $$  Q^*_2(s,g) = \max_{\pi_g} E \left[ \sum_{t'=t}^{t+N} f_{t'} + \gamma max_{g'} Q^*_2(s_{t+N},g') \mid s_t=s, g_t=g, \pi_g \right] $$
 
-5. 用神经网络来近似表示 $Q^*(s,g)$ , $Q^*(s,g) \approx Q(s,g,\theta)$，$Q \in \{Q_1,Q_2\}$。
+5. 用神经网络来近似表示 $Q^*(s,g)$ , $Q^*(s,g) \approx Q(s,g,\theta)$，$Q \in \{Q_1,Q_2\}$ 。
 
 6. 把 $Q_1$, $Q_2$ 的 experiences $(s_t, g_t, f_t, s_{t+N})$ 和 $(s_t, a_t, g_t, r_t, s_{t+1})$ 分别放入 disjoint memory spaces $\mathcal{D}_1$ 和 $\mathcal{D}_2$ 中。
 
